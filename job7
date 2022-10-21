@@ -1,0 +1,12 @@
+#!/bin/bash
+
+sudo apt install sudo
+sudo apt install proftpd-* -y
+sudo apt install openssl
+sudo useradd -m "merry" -p "$(echo "kalimac" | passwd -l -stdin)"
+sudo mkdir /etc/proftpd/ssl
+echo -ne "FR\nFRANCE\nMARSEILLE\n\n\n\n\n" | sudo openssl req -new -x509 -keyout /etc/proftpd/ssl/proftpd.key.pem -days 365 -nodes -out /etc/proftpd/ssl/proftpd.cert.pem
+sudo chmod 600 /etc/proftpd/ssl/proftpd.key.pem
+sudo chmod 640 /etc/proftpd/ssl/proftpd.cert.pem
+
+sudo systemctl restart proftpd
